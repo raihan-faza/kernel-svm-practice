@@ -34,9 +34,32 @@ print("Shuffled missing values:\n", shuffled_missing)
 
 ## checking missing at random (MAR)
 missing_df = df.isna().astype(int)
-
+"""
 correlations = missing_df.corr()
 plt.figure(figsize=(10, 6))
 sns.heatmap(correlations, annot=True, cmap="coolwarm", linewidths=0.5)
 plt.title("Correlation Heatmap of Missing Values")
+plt.show()
+"""
+
+## checking missing not at random
+df["Excess_kurtosis_missing"] = (
+    df[" Excess kurtosis of the integrated profile"].isna().astype(int)
+)
+df["Std_dev_DM_SNR_missing"] = (
+    df[" Standard deviation of the DM-SNR curve"].isna().astype(int)
+)
+df["Skewness_DM_SNR_missing"] = df[" Skewness of the DM-SNR curve"].isna().astype(int)
+
+# Compare distributions of missing vs. non-missing groups
+features_to_compare = [" Mean of the integrated profile", " Mean of the DM-SNR curve"]
+
+plt.figure(figsize=(12, 6))
+for i, feature in enumerate(features_to_compare, 1):
+    plt.subplot(1, 2, i)
+    sns.boxplot(x=df["Excess_kurtosis_missing"], y=df[feature])
+    plt.title(f"Comparison of {feature} based on Excess Kurtosis Missingness")
+    plt.xlabel("Excess Kurtosis Missing (0 = No, 1 = Yes)")
+
+plt.tight_layout()
 plt.show()
