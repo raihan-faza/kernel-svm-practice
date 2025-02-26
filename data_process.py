@@ -63,3 +63,13 @@ for i, feature in enumerate(features_to_compare, 1):
 
 plt.tight_layout()
 plt.show()
+
+# dropping nan value
+df.dropna(inplace=True)
+
+# Setting up target variable
+X = df.drop([" Skewness of the DM-SNR curve"], axis=1)
+y = df[" Skewness of the DM-SNR curve"]
+
+print(X)
+print(y)
