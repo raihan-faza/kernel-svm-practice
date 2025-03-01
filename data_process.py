@@ -1,10 +1,12 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
 # loading dataset
 df = pd.read_csv("pulsar_data_train.csv")
-
+"""
 # checking column info
 print(df.info())
 
@@ -16,7 +18,7 @@ print(df.head())
 
 # checking null values in percentage to decide on how to handle it
 print(str(df.isna().sum() / len(df) * 100))
-
+"""
 # there is some missing value, lets check what kind of missing value we are currently facing
 ## checking for missing completely at random (mcar)
 
@@ -28,12 +30,15 @@ df_shuffled = df.sample(frac=1, random_state=42)
 # Count missing values again
 shuffled_missing = df_shuffled.isna().sum()
 
+"""
 # Compare missing values before and after shuffling
 print("Original missing values:\n", original_missing)
 print("Shuffled missing values:\n", shuffled_missing)
+"""
 
 ## checking missing at random (MAR)
 missing_df = df.isna().astype(int)
+
 """
 correlations = missing_df.corr()
 plt.figure(figsize=(10, 6))
@@ -54,6 +59,7 @@ df["Skewness_DM_SNR_missing"] = df[" Skewness of the DM-SNR curve"].isna().astyp
 # Compare distributions of missing vs. non-missing groups
 features_to_compare = [" Mean of the integrated profile", " Mean of the DM-SNR curve"]
 
+"""
 plt.figure(figsize=(12, 6))
 for i, feature in enumerate(features_to_compare, 1):
     plt.subplot(1, 2, i)
@@ -63,6 +69,7 @@ for i, feature in enumerate(features_to_compare, 1):
 
 plt.tight_layout()
 plt.show()
+"""
 
 # dropping nan value
 df.dropna(inplace=True)
@@ -71,5 +78,17 @@ df.dropna(inplace=True)
 X = df.drop([" Skewness of the DM-SNR curve"], axis=1)
 y = df[" Skewness of the DM-SNR curve"]
 
-print(X)
-print(y)
+# print(X)
+# print(y)
+
+# splitting the training dataset into train and validation
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=0)
+
+# feature scaling
+cols = X_train.columns
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_val = scaler.transform(X_val)
+
+X_train = pd.DataFrame(X_train, columns=[cols])
+X_val = pd.DataFrame(X_val, columns=[cols])
