@@ -20,11 +20,15 @@ pip install -r requirements.txt
 Run the main script to train and evaluate the Kernel SVM model:
 
 ```bash
-python kernel_svm.py
+python train.py
 ```
 
 ## Dataset
 The dataset used for this practice is sourced from Kaggle or any public dataset with classification labels. Ensure the dataset is placed in the appropriate directory.
+
+## Results
+![Confusion Matrix](conf_matrix.png)
+![Classification Report](classification_report.png)
 
 ## References
 - [SVM Classifier Tutorial by Prashant111](https://www.kaggle.com/code/prashant111/svm-classifier-tutorial)

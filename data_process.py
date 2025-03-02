@@ -92,5 +92,3 @@ X_val = scaler.transform(X_val)
 
 X_train = pd.DataFrame(X_train, columns=[cols])
 X_val = pd.DataFrame(X_val, columns=[cols])
-
-print(X, y)
