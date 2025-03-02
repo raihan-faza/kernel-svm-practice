@@ -75,8 +75,8 @@ plt.show()
 df.dropna(inplace=True)
 
 # Setting up target variable
-X = df.drop([" Skewness of the DM-SNR curve"], axis=1)
-y = df[" Skewness of the DM-SNR curve"]
+X = df.drop(["target_class"], axis=1)
+y = df["target_class"]
 
 # print(X)
 # print(y)
@@ -92,3 +92,5 @@ X_val = scaler.transform(X_val)
 
 X_train = pd.DataFrame(X_train, columns=[cols])
 X_val = pd.DataFrame(X_val, columns=[cols])
+
+print(X, y)
